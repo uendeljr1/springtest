@@ -2,6 +2,7 @@ package org.example.test_spring.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.example.test_spring.entities.enums.OrderStatus;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -20,15 +21,18 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
     private Instant date;
 
+    private Integer orderStatus;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private User client;
 
     public  Order() {
     }
-    public Order(Long id, Instant date, User client) {
+    public Order(Long id, Instant date,OrderStatus orderStatus, User client) {
         this.id = id;
         this.date = date;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -54,6 +58,17 @@ public class Order implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
+
     }
 
     @Override
