@@ -21,8 +21,8 @@ public class CategoryResource {
 
     @GetMapping
     public ResponseEntity<List<Category>> findAll() {
-        List<Category> Categorys = services.findAll();
-        return ResponseEntity.ok().body(Categorys);
+        List<Category> categorys = services.findAll();
+        return ResponseEntity.ok().body(categorys);
     }
 
     @GetMapping(value = "/{id}")
